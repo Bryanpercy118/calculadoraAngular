@@ -9,13 +9,11 @@ export class AppComponent {
   title = 'cajeroAngular';
   cantidadARetirar: string = '';
   billetes: any[] = [];
-  denominaciones = [100000, 50000, 20000, 10000];
-  billetesEntregar: number[] = [0, 0, 0, 0];
+  denominaciones = [100000, 50000, 20000, 10000, 5000];
 
   agregarNumero(numero: string): void {
     this.cantidadARetirar += numero;
   }
-
 
   borrarUltimo(): void {
     this.cantidadARetirar = this.cantidadARetirar.slice(0, -1);
@@ -23,45 +21,41 @@ export class AppComponent {
 
   cancelarOperacion(): void {
     this.cantidadARetirar = '';
-    this.billetesEntregar = [0, 0, 0, 0];
     this.billetes = [];
   }
 
   continuarOperacion(): void {
-    this.calcularBilletes(parseInt(this.cantidadARetirar, 10));
+    this.dispensarDinero(parseInt(this.cantidadARetirar, 10));
   }
 
-  calcularBilletes(cantidad: number): void {
+  dispensarDinero(cantidad: number): void {
     let monto = cantidad;
-    if (cantidad === 100000) {
-      for (let i = 0; i < this.denominaciones.length; i++) {
-        const billete = this.denominaciones[i];
-        const cantidadBilletes = Math.floor(monto / billete);
-        this.billetesEntregar[i] += cantidadBilletes;
-        monto -= cantidadBilletes * billete;
-      }
-    } else {
-      for (let i = 0; i < this.denominaciones.length; i++) {
-        const billete = this.denominaciones[i];
-        if (monto >= billete) {
-          const cantidadBilletes = Math.floor(monto / billete);
-          this.billetesEntregar[i] += cantidadBilletes;
-          monto -= cantidadBilletes * billete;
+    this.billetes = [0, 0, 0, 0, 0]; 
+
+    let contador = 0;
+
+    while (monto > 0) {
+      let entra = 0;
+
+      for (let i = contador; i < this.denominaciones.length; i++) {
+        if (monto >= this.denominaciones[i]) {
+          this.billetes[i]++;
+          monto -= this.denominaciones[i];
+          entra = 1;
         }
+      }
+
+      if (entra === 0 && contador === this.denominaciones.length) {
+        contador = 0;
+      } else {
+        contador++;
       }
     }
 
-    if (monto > 0) {
-      console.log('No se pueden entregar billetes para la cantidad solicitada');
-    } else {
-      console.log('Billetes a entregar:', this.billetesEntregar);
-
-
-      this.billetes = [];
-      for (let i = 0; i < this.billetesEntregar.length; i++) {
-        if (this.billetesEntregar[i] > 0) {
-          this.billetes.push({ valor: this.denominaciones[i], cantidad: this.billetesEntregar[i] });
-        }
+    console.log('Billetes a entregar:');
+    for (let i = 0; i < this.billetes.length; i++) {
+      if (this.billetes[i] > 0) {
+        console.log(`${this.billetes[i]} billetes de ${this.denominaciones[i]}`);
       }
     }
   }

@@ -1,64 +1,65 @@
 <div class="contenedor">
   <div class="c1">
-      <div class="p1">
-          <div class="img"><img src="img/bancoupar.png" alt="logo"></div>
+    <div class="p1">
+      <div class="img"><img src="img/bancoupar.png" alt="logo"></div>
 
-          <div class="inicio">
-              <div class="title">
-                  <h2>¡Bienvenido/a a Bancoupar! Su banco de
-                      confianza para todas sus necesidades financieras.</h2>
-              </div>
+      <div class="inicio">
+        <div class="title">
+          <h2>¡Bienvenido/a a Bancoupar! Su banco de
+              confianza para todas sus necesidades financieras.</h2>
+        </div>
 
-              <div class="retiros">
-                  <li><b>Retiros</b></li>
-              </div>
-          </div>
-
-          <div class="valores">
-              <div class="title">
-                  <h2>Digite la cantidad a retirar</h2>
-              </div>
-
-              <div class="retiros">
-                  <input type="text" [(ngModel)]="cantidadARetirar" readonly>
-              </div>
-          </div>
-
+        <div class="retiros">
+          <li><b>Retiros</b></li>
+        </div>
       </div>
 
-      <div class="p2">
-          <div class="numeric">
-              <form action="">
-                  <button (click)="agregarNumero('1')"><b>1</b></button>
-                  <button (click)="agregarNumero('2')"><b>2</b></button>
-                  <button (click)="agregarNumero('3')"><b>3</b></button>
-                  <button (click)="agregarNumero('4')"><b>4</b></button>
-                  <button (click)="agregarNumero('5')"><b>5</b></button>
-                  <button (click)="agregarNumero('6')"><b>6</b></button>
-                  <button (click)="agregarNumero('7')"><b>7</b></button>
-                  <button (click)="agregarNumero('8')"><b>8</b></button>
-                  <button (click)="agregarNumero('9')"><b>9</b></button>
-                  <button (click)="agregarNumero('0')"><b>0</b></button>
-              </form>
-          </div>
+      <div class="valores">
+        <div class="title">
+          <h2>Digite la cantidad a retirar</h2>
+        </div>
 
-          <div class="options">
-              <form action="">
-                  <button class="con" (click)="continuarOperacion()"><b>Continuar</b></button>
-                  <button class="cor" (click)="borrarUltimo()"><b>Corregir</b></button>
-                  <button class="can" (click)="cancelarOperacion()"><b>Cancelar</b></button>
-              </form>
-          </div>
+        <div class="retiros">
+          <input type="text" [(ngModel)]="cantidadARetirar" readonly>
+        </div>
       </div>
+
+    </div>
+
+    <div class="p2">
+      <div class="numeric">
+        <form action="">
+          <button (click)="agregarNumero('1')"><b>1</b></button>
+          <button (click)="agregarNumero('2')"><b>2</b></button>
+          <button (click)="agregarNumero('3')"><b>3</b></button>
+          <button (click)="agregarNumero('4')"><b>4</b></button>
+          <button (click)="agregarNumero('5')"><b>5</b></button>
+          <button (click)="agregarNumero('6')"><b>6</b></button>
+          <button (click)="agregarNumero('7')"><b>7</b></button>
+          <button (click)="agregarNumero('8')"><b>8</b></button>
+          <button (click)="agregarNumero('9')"><b>9</b></button>
+          <button (click)="agregarNumero('0')"><b>0</b></button>
+        </form>
+      </div>
+
+      <div class="options">
+        <form action="">
+          <button class="con" (click)="continuarOperacion()"><b>Continuar</b></button>
+          <button class="cor" (click)="borrarUltimo()"><b>Corregir</b></button>
+          <button class="can" (click)="cancelarOperacion()"><b>Cancelar</b></button>
+        </form>
+      </div>
+    </div>
   </div>
 
- 
   <div *ngIf="billetes.length > 0" class="billetes">
     <h3>Billetes a entregar:</h3>
     <ul>
-      <li *ngFor="let billete of billetes">
-        {{ billete.cantidad }} billetes de {{ billete.valor }}
-      </li>
+      <ng-container *ngFor="let cantidad of billetes; let i = index">
+        <li *ngIf="cantidad > 0">{{ cantidad }} billetes de {{ denominaciones[i] }}</li>
+      </ng-container>
     </ul>
   </div>
+
+
 </div>
